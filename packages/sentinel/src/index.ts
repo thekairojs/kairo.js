@@ -9,5 +9,6 @@ export {
   isCanaryToken,
   scanForCanary,
   revokeCanary,
+  revokeCanaryAfter,
   canaryRegistrySize,
 } from './canary.js'

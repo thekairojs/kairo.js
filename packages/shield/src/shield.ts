@@ -71,6 +71,7 @@ export function createShield(options: ShieldOptions = {}): Middleware {
             detail:    `pii in response: ${matches.map(m => `${m.field}(${m.pattern})`).join(', ')}`,
             timestamp: Date.now(),
             entropy:   ctx.kairo.entropy,
+            ip:        ctx.ip,
           })
         }
 
@@ -92,6 +93,7 @@ export function createShield(options: ShieldOptions = {}): Middleware {
           detail:    `sensitive strings in response: ${found.map(s => s.slice(0, 8)).join(', ')}`,
           timestamp: Date.now(),
           entropy:   ctx.kairo.entropy,
+          ip:        ctx.ip,
         })
       }
     }

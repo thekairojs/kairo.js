@@ -339,11 +339,12 @@ export class KairoApp implements KairoAppInstance {
           ctx.kairo.entropy = Math.min(ctx.kairo.entropy + 0.4, 1.0)
 
           const event: import('./types.js').SecurityEvent = {
-            type: 'ghost_route_hit',
-            route: req.path,
-            detail: `Ghost route hit: ${req.path} (alert: ${ghost.alertLevel})`,
+            type:      'ghost_route_hit',
+            route:     req.path,
+            detail:    `Ghost route hit: ${req.path} (alert: ${ghost.alertLevel})`,
             timestamp: Date.now(),
-            entropy: ctx.kairo.entropy,
+            entropy:   ctx.kairo.entropy,
+            ip:        ctx.ip,
           }
           ctx.kairo.events.push(event)
           for (const listener of this.securityEventListeners) {

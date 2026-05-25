@@ -11,33 +11,23 @@
  * The membrane never blocks requests — it is an observation + annotation layer.
  * Enforcement belongs in Trust Lattice and Runtime Sentinel (Phases 3-4).
  *
- * ── Ghost route wiring limitation ────────────────────────────────────────────
- * The membrane runs as a global middleware that only fires for MATCHED routes.
- * Ghost route hits (for unmatched paths like /.env) are handled by the app
- * outside the middleware chain. Therefore, the membrane cannot automatically
- * update the IP tracker's `hasGhostHit` flag for those requests.
- *
- * To wire ghost hits into the entropy scorer, register an `onSecurityEvent`
- * handler that calls `tracker.markGhostHit(ip)`:
+ * ── Ghost route → IP tracker wiring ─────────────────────────────────────────
+ * Ghost route hits are handled by the app outside the middleware chain, so the
+ * membrane cannot automatically update hasGhostHit. Wire it via onSecurityEvent:
  *
  * ```ts
  * const tracker = new IpTracker()
  * app.use(createMembrane({ ipTracker: tracker }))
  *
- * // In a custom plugin that receives the ghost_route_hit event:
  * app.use({
- *   name: 'ghost-tracker', version: '0.1.0',
+ *   name: 'ghost-tracker', version: '1.0.0',
  *   onSecurityEvent: (event) => {
- *     // NOTE: SecurityEvent does not include the IP — add it via a custom
- *     // detail field or extend the event type in Phase 3.
  *     if (event.type === 'ghost_route_hit') {
- *       // tracker.markGhostHit(ip)   ← Phase 3: wire IP into SecurityEvent
+ *       tracker.markGhostHit(event.ip)
  *     }
  *   }
  * })
  * ```
- *
- * Phase 3 (Runtime Sentinel) will add `ip` to SecurityEvent and close this gap.
  */
 
 import type { KairoContext, KairoPlugin, Middleware } from 'kairo'

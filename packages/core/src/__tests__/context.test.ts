@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { createContext, createRequest, createResponse, flushResponse } from '../context.js'
+import { createContext, createRequest, createResponse, flushResponse, emitSecurityEvent } from '../context.js'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 function makeFakeRawReq(overrides: Partial<{
@@ -201,5 +201,41 @@ describe('KairoContext', () => {
     const { ctx } = makeCtx()
     ctx.state['user'] = { id: 1 }
     expect(ctx.state['user']).toEqual({ id: 1 })
+  })
+})
+
+describe('emitSecurityEvent', () => {
+  function makeEvtCtx() {
+    const raw = Object.assign(Object.create(null), {
+      method: 'GET', url: '/',
+      headers: {}, socket: { remoteAddress: '127.0.0.1' },
+    }) as unknown as import('node:http').IncomingMessage
+    const rawRes = Object.assign(Object.create(null), {
+      headersSent: false, setHeader() {}, writeHead() {}, end() {},
+    }) as unknown as import('node:http').ServerResponse
+    return createContext(createRequest(raw), createResponse(rawRes), {})
+  }
+
+  it('auto-populates ip from ctx.ip', () => {
+    const ctx = makeEvtCtx()
+    emitSecurityEvent(ctx, { type: 'entropy_spike', route: '/', detail: 'test' })
+    expect(ctx.kairo.events[0]?.ip).toBe('127.0.0.1')
+  })
+
+  it('auto-populates entropy from ctx.kairo.entropy', () => {
+    const ctx = makeEvtCtx()
+    ctx.kairo.entropy = 0.42
+    emitSecurityEvent(ctx, { type: 'entropy_spike', route: '/', detail: 'test' })
+    expect(ctx.kairo.events[0]?.entropy).toBeCloseTo(0.42)
+  })
+
+  it('auto-populates timestamp as a recent unix ms', () => {
+    const before = Date.now()
+    const ctx = makeEvtCtx()
+    emitSecurityEvent(ctx, { type: 'taint_neutralized', route: '/', detail: 'test' })
+    const after = Date.now()
+    const ts = ctx.kairo.events[0]?.timestamp ?? 0
+    expect(ts).toBeGreaterThanOrEqual(before)
+    expect(ts).toBeLessThanOrEqual(after)
   })
 })

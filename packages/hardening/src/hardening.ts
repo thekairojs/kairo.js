@@ -71,6 +71,7 @@ export function createHardening(options: HardeningOptions = {}): Middleware {
         detail:    `entropy ${entropy.toFixed(3)} >= threshold ${threshold}`,
         timestamp: Date.now(),
         entropy,
+        ip:        ctx.ip,
       })
 
       if (action === 'block') {

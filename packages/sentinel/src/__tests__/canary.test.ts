@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import {
   createCanary, isCanaryToken, scanForCanary,
-  revokeCanary, canaryRegistrySize,
+  revokeCanary, revokeCanaryAfter, canaryRegistrySize,
 } from '../canary.js'
 import { createContext, createRequest, createResponse } from 'kairo'
 import type { IncomingMessage, ServerResponse } from 'node:http'
@@ -148,5 +148,26 @@ describe('canary registry — memory safety', () => {
     }).not.toThrow()
     // Registry must remain bounded (≤ 100,000 per cap, but we verify it grew)
     expect(canaryRegistrySize()).toBeGreaterThan(0)
+  })
+})
+
+describe('revokeCanaryAfter', () => {
+  it('auto-revokes a token after the specified delay', async () => {
+    vi.useFakeTimers()
+    const rec = createCanary({ id: 1 })
+    const token = (rec as Record<string, unknown>)['__k_c__'] as string
+    expect(isCanaryToken(token)).toBe(true)
+
+    revokeCanaryAfter(token, 1000)
+    vi.advanceTimersByTime(999)
+    expect(isCanaryToken(token)).toBe(true)   // still alive
+
+    vi.advanceTimersByTime(1)
+    expect(isCanaryToken(token)).toBe(false)  // evicted
+    vi.useRealTimers()
+  })
+
+  it('is a no-op when the token does not exist', () => {
+    expect(() => revokeCanaryAfter('nonexistent-token', 100)).not.toThrow()
   })
 })

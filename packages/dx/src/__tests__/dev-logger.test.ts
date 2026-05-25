@@ -52,7 +52,7 @@ describe('devLogger — output lines', () => {
   it('lists event types when security events are present', async () => {
     const lines: string[] = []
     const ctx = makeCtx()
-    ctx.kairo.events.push({ type: 'entropy_spike', route: '/', detail: '', timestamp: Date.now(), entropy: 0.8 })
+    ctx.kairo.events.push({ type: 'entropy_spike', route: '/', detail: '', timestamp: Date.now(), entropy: 0.8, ip: '127.0.0.1' })
 
     await devLogger({ enabled: true, write: l => lines.push(l) })(ctx, noop)
 

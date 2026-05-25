@@ -60,13 +60,14 @@ export function createIntent(options: IntentOptions = {}): Middleware {
       ctx.kairo.entropy = Math.min(1.0, ctx.kairo.entropy + delta * result.confidence)
     }
 
-    if (result.type === 'scanner') {
+    if (result.type === 'scanner' || result.type === 'bot') {
       ctx.kairo.events.push({
         type:      'intent_drift',
         route:     ctx.path,
-        detail:    `classified as scanner (confidence ${result.confidence.toFixed(2)}): ${result.signals.join('; ')}`,
+        detail:    `classified as ${result.type} (confidence ${result.confidence.toFixed(2)}): ${result.signals.join('; ')}`,
         timestamp: Date.now(),
         entropy:   ctx.kairo.entropy,
+        ip:        ctx.ip,
       })
     }
 

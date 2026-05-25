@@ -247,11 +247,12 @@ function writeResponse(res: KairoResponse): void {
   }
 }
 
-export function emitSecurityEvent(ctx: KairoContext, event: Omit<SecurityEvent, 'timestamp' | 'entropy'>): void {
+export function emitSecurityEvent(ctx: KairoContext, event: Omit<SecurityEvent, 'timestamp' | 'entropy' | 'ip'>): void {
   const fullEvent: SecurityEvent = {
     ...event,
     timestamp: Date.now(),
-    entropy: ctx.kairo.entropy,
+    entropy:   ctx.kairo.entropy,
+    ip:        ctx.ip,
   }
   ctx.kairo.events.push(fullEvent)
 }

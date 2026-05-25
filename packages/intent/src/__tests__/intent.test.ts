@@ -92,6 +92,21 @@ describe('createIntent — security events', () => {
     expect(ctx.kairo.events.some(e => e.type === 'intent_drift')).toBe(true)
   })
 
+  it('emits intent_drift event for bot traffic', async () => {
+    const ctx = makeCtx({ 'user-agent': 'Googlebot/2.1' })
+    await createIntent()(ctx, noop)
+    const event = ctx.kairo.events.find(e => e.type === 'intent_drift')
+    expect(event).toBeDefined()
+    expect(event?.detail).toContain('bot')
+  })
+
+  it('intent_drift event carries the client IP', async () => {
+    const ctx = makeCtx({ 'user-agent': 'nikto/2.1' })
+    await createIntent()(ctx, noop)
+    const event = ctx.kairo.events.find(e => e.type === 'intent_drift')
+    expect(event?.ip).toBe('127.0.0.1')
+  })
+
   it('does not emit intent_drift for human traffic', async () => {
     const ctx = makeCtx({ 'user-agent': 'Mozilla/5.0', accept: 'text/html' })
     await createIntent()(ctx, noop)

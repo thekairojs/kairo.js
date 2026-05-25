@@ -64,6 +64,8 @@ export interface SecurityEvent {
   detail: string
   timestamp: number
   entropy: number
+  /** Client IP that triggered this event. Empty string when IP is unavailable. */
+  ip: string
 }
 
 export type SecurityEventType =

@@ -82,6 +82,20 @@ export function revokeCanary(token: string): void {
   registry.delete(token)
 }
 
+/**
+ * Schedule automatic revocation of a canary token after `ms` milliseconds.
+ * This is the safe default for most handlers — create a canary, use it,
+ * let it self-destruct after the record's expected lifetime.
+ *
+ * ```ts
+ * const row = createCanary({ id: userId, name: 'Alice' }, ctx)
+ * revokeCanaryAfter(row.__k_c__, 5 * 60_000) // auto-revoke after 5 minutes
+ * ```
+ */
+export function revokeCanaryAfter(token: string, ms: number): void {
+  setTimeout(() => registry.delete(token), ms).unref()
+}
+
 export function canaryRegistrySize(): number {
   return registry.size
 }
