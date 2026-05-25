@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { createHardening } from '../hardening.js'
 import { createContext, createRequest, createResponse } from 'kairo'
+import type { KairoContext, SecurityEvent } from 'kairo'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 function makeCtx(entropy = 0.0): KairoContext {
@@ -83,7 +84,7 @@ describe('createHardening — log mode', () => {
   it('still emits an entropy_spike event in log mode', async () => {
     const ctx = makeCtx(0.9)
     await createHardening({ threshold: 0.5, action: 'log' })(ctx, noop)
-    expect(ctx.kairo.events.some(e => e.type === 'entropy_spike')).toBe(true)
+    expect(ctx.kairo.events.some((e: SecurityEvent) => e.type === 'entropy_spike')).toBe(true)
   })
 })
 
@@ -93,7 +94,7 @@ describe('createHardening — security events', () => {
   it('emits entropy_spike event on block', async () => {
     const ctx = makeCtx(0.8)
     await createHardening({ threshold: 0.5 })(ctx, noop)
-    const event = ctx.kairo.events.find(e => e.type === 'entropy_spike')
+    const event = ctx.kairo.events.find((e: SecurityEvent) => e.type === 'entropy_spike')
     expect(event).toBeDefined()
     expect(event?.entropy).toBeCloseTo(0.8)
   })
