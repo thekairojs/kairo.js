@@ -144,6 +144,12 @@ export class KairoApp implements KairoAppInstance {
     return grp
   }
 
+  // ─── Route Introspection ───
+
+  getRoutes(): readonly import('./types.js').RouteDefinition[] {
+    return this.router.getRoutes()
+  }
+
   // ─── Ghost Routes ───
 
   ghost(path: string, options?: GhostRouteOptions): void {

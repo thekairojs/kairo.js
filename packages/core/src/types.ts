@@ -196,6 +196,8 @@ export interface KairoAppInstance {
 
   ghost(path: string, options?: GhostRouteOptions): void
 
+  getRoutes(): readonly RouteDefinition[]
+
   listen(port: number, hostname?: string): Promise<void>
   close(): Promise<void>
 
