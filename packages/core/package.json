@@ -18,7 +18,9 @@
       }
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -27,9 +29,19 @@
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist"
   },
-  "keywords": ["framework", "security", "typescript", "http", "server"],
+  "keywords": [
+    "framework",
+    "security",
+    "typescript",
+    "http",
+    "server"
+  ],
   "license": "MIT",
   "engines": {
     "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thekairojs/kairo.js"
   }
 }

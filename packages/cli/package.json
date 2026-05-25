@@ -7,16 +7,22 @@
     "@thekairojs/kairo": "./dist/bin.js"
   },
   "main": "./dist/bin.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
-    "dev":   "tsup --watch",
-    "test":  "vitest run",
+    "dev": "tsup --watch",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "tsup":    "*",
+    "tsup": "*",
     "vitest": "^4.1.7",
     "typescript": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thekairojs/kairo.js"
   }
 }

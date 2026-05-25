@@ -3,28 +3,36 @@
   "version": "1.0.0",
   "description": "KAIRO Intent Engine — classifies request origin as human, api, bot, or scanner",
   "type": "module",
-  "main":   "./dist/index.cjs",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "types":  "./dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types":   "./dist/index.d.ts",
-      "import":  "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build":     "tsup",
-    "dev":       "tsup --watch",
-    "test":      "vitest run",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
-  "peerDependencies": { "@thekairojs/kairo": "*" },
+  "peerDependencies": {
+    "@thekairojs/kairo": "*"
+  },
   "devDependencies": {
-    "kairo":      "*",
-    "tsup":       "^8.0.0",
+    "kairo": "*",
+    "tsup": "^8.0.0",
     "typescript": "^5.4.0",
     "vitest": "^4.1.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thekairojs/kairo.js"
   }
 }
