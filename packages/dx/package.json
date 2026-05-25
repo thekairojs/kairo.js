@@ -1,6 +1,6 @@
 {
   "name": "kairo-dx",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "KAIRO DX Layer — schema validation middleware and dev-mode request diagnostics",
   "type": "module",
   "main": "./dist/index.cjs",

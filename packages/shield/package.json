@@ -1,6 +1,6 @@
 {
   "name": "kairo-shield",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0",
   "description": "KAIRO Data Shield — PII detection and redaction for outbound responses",
   "type": "module",
   "main":   "./dist/index.cjs",

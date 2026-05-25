@@ -1,6 +1,6 @@
 {
   "name": "kairo-membrane",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "KAIRO Request Membrane — entropy scoring, fingerprinting, HMAC envelopes, taint propagation",
   "type": "module",
   "main": "./dist/index.cjs",
