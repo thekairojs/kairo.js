@@ -1,5 +1,5 @@
 {
-  "name": "kairo",
+  "name": "@thekairojs/kairo",
   "version": "1.0.0",
   "description": "Act at the right moment. Secure from the first line.",
   "type": "module",

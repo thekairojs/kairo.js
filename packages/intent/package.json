@@ -1,5 +1,5 @@
 {
-  "name": "kairo-intent",
+  "name": "@thekairojs/kairo-intent",
   "version": "1.0.0",
   "description": "KAIRO Intent Engine — classifies request origin as human, api, bot, or scanner",
   "type": "module",
@@ -20,7 +20,7 @@
     "test":      "vitest run",
     "typecheck": "tsc --noEmit"
   },
-  "peerDependencies": { "kairo": "*" },
+  "peerDependencies": { "@thekairojs/kairo": "*" },
   "devDependencies": {
     "kairo":      "*",
     "tsup":       "^8.0.0",

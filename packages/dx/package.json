@@ -1,5 +1,5 @@
 {
-  "name": "kairo-dx",
+  "name": "@thekairojs/kairo-dx",
   "version": "1.0.0",
   "description": "KAIRO DX Layer — schema validation middleware and dev-mode request diagnostics",
   "type": "module",
@@ -21,10 +21,10 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "kairo": "*"
+    "@thekairojs/kairo": "*"
   },
   "devDependencies": {
-    "kairo": "*",
+    "@thekairojs/kairo": "*",
     "tsup": "^8.0.0",
     "typescript": "^5.4.0",
     "vitest": "^4.1.7"

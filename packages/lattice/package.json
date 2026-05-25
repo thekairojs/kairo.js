@@ -1,5 +1,5 @@
 {
-  "name": "kairo-lattice",
+  "name": "@thekairojs/kairo-lattice",
   "version": "1.0.0",
   "description": "KAIRO Trust Lattice — claim-based authorization with trust level ordering",
   "type": "module",
@@ -21,10 +21,10 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "kairo": "*"
+    "@thekairojs/kairo": "*"
   },
   "devDependencies": {
-    "kairo": "*",
+    "@thekairojs/kairo": "*",
     "tsup": "^8.0.0",
     "typescript": "^5.4.0",
     "vitest": "^4.1.7"

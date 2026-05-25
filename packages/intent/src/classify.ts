@@ -1,4 +1,4 @@
-import type { IntentType } from 'kairo'
+import type { IntentType } from '@thekairojs/kairo'
 
 // ─── Signal database ──────────────────────────────────────────────────────────
 

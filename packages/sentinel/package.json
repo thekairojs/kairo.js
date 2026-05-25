@@ -1,5 +1,5 @@
 {
-  "name": "kairo-sentinel",
+  "name": "@thekairojs/kairo-sentinel",
   "version": "1.0.0",
   "description": "KAIRO Runtime Sentinel — sink checking, memory monitoring, canary records",
   "type": "module",
@@ -21,10 +21,10 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "kairo": "*"
+    "@thekairojs/kairo": "*"
   },
   "devDependencies": {
-    "kairo": "*",
+    "@thekairojs/kairo": "*",
     "tsup": "^8.0.0",
     "typescript": "^5.4.0",
     "vitest": "^4.1.7"

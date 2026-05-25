@@ -17,7 +17,7 @@
  * Phase 2 — zero runtime overhead on data access.
  */
 
-import type { KairoContext } from 'kairo'
+import type { KairoContext } from '@thekairojs/kairo'
 
 /** Maximum nesting depth to taint from a JSON body. Deep paths are expensive. */
 const MAX_TAINT_DEPTH = 8

@@ -1,5 +1,5 @@
 {
-  "name": "kairo-membrane",
+  "name": "@thekairojs/kairo-membrane",
   "version": "1.0.0",
   "description": "KAIRO Request Membrane — entropy scoring, fingerprinting, HMAC envelopes, taint propagation",
   "type": "module",
@@ -21,10 +21,10 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "kairo": "*"
+    "@thekairojs/kairo": "*"
   },
   "devDependencies": {
-    "kairo": "*",
+    "@thekairojs/kairo": "*",
     "tsup": "^8.0.0",
     "typescript": "^5.4.0",
     "vitest": "^4.1.7"

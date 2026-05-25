@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { createIntent } from '../intent.js'
-import { createContext, createRequest, createResponse } from 'kairo'
-import type { KairoContext } from 'kairo'
+import { createContext, createRequest, createResponse } from '@thekairojs/kairo'
+import type { KairoContext } from '@thekairojs/kairo'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 function makeCtx(headers: Record<string, string> = {}, path = '/api/data'): KairoContext {

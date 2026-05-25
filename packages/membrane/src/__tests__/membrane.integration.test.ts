@@ -3,8 +3,8 @@
  * against a real KairoApp instance over HTTP.
  */
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import { createApp } from 'kairo'
-import type { KairoContext } from 'kairo'
+import { createApp } from '@thekairojs/kairo'
+import type { KairoContext } from '@thekairojs/kairo'
 import { createMembrane, IpTracker, verifySignature, sign } from '../index.js'
 
 const BASE_PORT = 3400

@@ -1,6 +1,6 @@
 import { randomBytes } from 'node:crypto'
-import type { KairoContext } from 'kairo'
-import { emitSecurityEvent } from 'kairo'
+import type { KairoContext } from '@thekairojs/kairo'
+import { emitSecurityEvent } from '@thekairojs/kairo'
 
 const CANARY_FIELD = '__k_c__'
 const registry = new Map<string, { route: string; createdAt: number }>()

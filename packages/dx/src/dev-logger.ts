@@ -1,4 +1,4 @@
-import type { KairoContext, Middleware } from 'kairo'
+import type { KairoContext, Middleware } from '@thekairojs/kairo'
 
 export interface DevLoggerOptions {
   /**

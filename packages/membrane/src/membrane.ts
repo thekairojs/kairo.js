@@ -30,8 +30,8 @@
  * ```
  */
 
-import type { KairoContext, KairoPlugin, Middleware } from 'kairo'
-import { emitSecurityEvent } from 'kairo'
+import type { KairoContext, KairoPlugin, Middleware } from '@thekairojs/kairo'
+import { emitSecurityEvent } from '@thekairojs/kairo'
 import { computeEntropy, measureJsonDepth, type EntropyResult } from './entropy.js'
 import { defaultIpTracker, IpTracker } from './ip-tracker.js'
 import { propagateTaint } from './taint.js'
@@ -71,13 +71,13 @@ export interface MembraneOptions {
  *
  * Usage (as a plugin):
  * ```ts
- * import { createMembrane } from 'kairo-membrane'
+ * import { createMembrane } from '@thekairojs/kairo-membrane'
  * app.use(createMembrane({ entropyEventThreshold: 0.6 }))
  * ```
  *
  * Usage (as raw middleware):
  * ```ts
- * import { createMembraneMiddleware } from 'kairo-membrane'
+ * import { createMembraneMiddleware } from '@thekairojs/kairo-membrane'
  * app.use(createMembraneMiddleware({ ... }))
  * ```
  */

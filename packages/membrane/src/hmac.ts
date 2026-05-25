@@ -14,7 +14,7 @@
  */
 
 import { createHmac, timingSafeEqual } from 'node:crypto'
-import type { KairoContext, Middleware } from 'kairo'
+import type { KairoContext, Middleware } from '@thekairojs/kairo'
 
 export const SIGNATURE_HEADER = 'x-kairo-signature'
 export const SIGNATURE_PREFIX = 'sha256='
@@ -68,7 +68,7 @@ export function verify(body: string | Buffer, secret: string, signature: string)
  *
  * Usage:
  * ```ts
- * import { verifySignature } from 'kairo-membrane'
+ * import { verifySignature } from '@thekairojs/kairo-membrane'
  * app.use(verifySignature({ secret: process.env.SERVICE_SECRET! }))
  * ```
  */

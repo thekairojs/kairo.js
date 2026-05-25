@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { propagateTaint, isTainted, isAncestorTainted } from '../taint.js'
-import { createContext, createRequest, createResponse } from 'kairo'
+import { createContext, createRequest, createResponse } from '@thekairojs/kairo'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 function makeCtx(options: {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { createHardening } from '../hardening.js'
-import { createContext, createRequest, createResponse } from 'kairo'
-import type { KairoContext, SecurityEvent } from 'kairo'
+import { createContext, createRequest, createResponse } from '@thekairojs/kairo'
+import type { KairoContext, SecurityEvent } from '@thekairojs/kairo'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 function makeCtx(entropy = 0.0): KairoContext {

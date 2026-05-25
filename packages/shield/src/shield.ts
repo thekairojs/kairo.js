@@ -1,5 +1,5 @@
-import type { KairoContext, Middleware } from 'kairo'
-import { emitSecurityEvent } from 'kairo'
+import type { KairoContext, Middleware } from '@thekairojs/kairo'
+import { emitSecurityEvent } from '@thekairojs/kairo'
 import { scanForPii } from './patterns.js'
 
 export interface ShieldOptions {

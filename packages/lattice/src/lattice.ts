@@ -1,5 +1,5 @@
-import type { KairoContext, KairoPlugin, Middleware, TrustClaims, TrustLevel } from 'kairo'
-import { emitSecurityEvent } from 'kairo'
+import type { KairoContext, KairoPlugin, Middleware, TrustClaims, TrustLevel } from '@thekairojs/kairo'
+import { emitSecurityEvent } from '@thekairojs/kairo'
 import { meetsLevel } from './levels.js'
 
 export interface LatticeOptions {

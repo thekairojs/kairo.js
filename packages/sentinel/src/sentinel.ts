@@ -1,5 +1,5 @@
-import type { KairoContext, KairoPlugin, Middleware, SecurityEvent } from 'kairo'
-import { emitSecurityEvent } from 'kairo'
+import type { KairoContext, KairoPlugin, Middleware, SecurityEvent } from '@thekairojs/kairo'
+import { emitSecurityEvent } from '@thekairojs/kairo'
 import { scanForCanary } from './canary.js'
 
 export interface SentinelOptions {

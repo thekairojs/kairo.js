@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { checkSql, checkPath, checkShell, checkTemplate } from '../sinks.js'
-import { createContext, createRequest, createResponse } from 'kairo'
+import { createContext, createRequest, createResponse } from '@thekairojs/kairo'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 function makeCtx(url = '/') {

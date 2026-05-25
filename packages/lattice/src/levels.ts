@@ -1,4 +1,4 @@
-import type { TrustLevel } from 'kairo'
+import type { TrustLevel } from '@thekairojs/kairo'
 
 const ORDER: Record<TrustLevel, number> = {
   none:   0,

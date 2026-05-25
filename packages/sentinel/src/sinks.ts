@@ -1,5 +1,5 @@
-import type { KairoContext } from 'kairo'
-import { emitSecurityEvent } from 'kairo'
+import type { KairoContext } from '@thekairojs/kairo'
+import { emitSecurityEvent } from '@thekairojs/kairo'
 
 export type SinkType = 'sql' | 'path' | 'shell' | 'template'
 

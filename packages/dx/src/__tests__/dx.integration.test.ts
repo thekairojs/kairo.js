@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import { createApp } from 'kairo'
+import { createApp } from '@thekairojs/kairo'
 import { validate, devLogger } from '../index.js'
-import type { KairoContext } from 'kairo'
+import type { KairoContext } from '@thekairojs/kairo'
 
 const BASE_PORT = 3900
 

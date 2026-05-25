@@ -3,7 +3,7 @@ import {
   createCanary, isCanaryToken, scanForCanary,
   revokeCanary, revokeCanaryAfter, canaryRegistrySize,
 } from '../canary.js'
-import { createContext, createRequest, createResponse } from 'kairo'
+import { createContext, createRequest, createResponse } from '@thekairojs/kairo'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 function makeCtx() {

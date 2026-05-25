@@ -10,13 +10,13 @@
   },
   "devDependencies": {
     "kairo":             "*",
-    "kairo-membrane":    "*",
-    "kairo-intent":      "*",
-    "kairo-lattice":     "*",
-    "kairo-sentinel":    "*",
-    "kairo-shield":      "*",
-    "kairo-hardening":   "*",
-    "kairo-dx":          "*",
+    "@thekairojs/kairo-membrane":    "*",
+    "@thekairojs/kairo-intent":      "*",
+    "@thekairojs/kairo-lattice":     "*",
+    "@thekairojs/kairo-sentinel":    "*",
+    "@thekairojs/kairo-shield":      "*",
+    "@thekairojs/kairo-hardening":   "*",
+    "@thekairojs/kairo-dx":          "*",
     "vitest":            "^4.1.7",
     "typescript":        "^5.4.0"
   }

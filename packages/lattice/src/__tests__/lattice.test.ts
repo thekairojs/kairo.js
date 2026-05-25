@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { createLattice, meetsLevel, parseTrustLevel } from '../index.js'
-import { createContext, createRequest, createResponse } from 'kairo'
-import type { KairoContext, TrustClaims } from 'kairo'
+import { createContext, createRequest, createResponse } from '@thekairojs/kairo'
+import type { KairoContext, TrustClaims } from '@thekairojs/kairo'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 function makeCtx(url = '/'): KairoContext {

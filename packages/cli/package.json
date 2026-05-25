@@ -1,10 +1,10 @@
 {
-  "name": "kairo-cli",
+  "name": "@thekairojs/kairo-cli",
   "version": "1.0.0",
   "description": "KAIRO CLI — project scaffolding, route inspection, and security audit",
   "type": "module",
   "bin": {
-    "kairo": "./dist/bin.js"
+    "@thekairojs/kairo": "./dist/bin.js"
   },
   "main": "./dist/bin.js",
   "files": ["dist"],

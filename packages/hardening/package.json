@@ -1,5 +1,5 @@
 {
-  "name": "kairo-hardening",
+  "name": "@thekairojs/kairo-hardening",
   "version": "1.0.0",
   "description": "KAIRO Hardening Layer — active entropy-based request blocking",
   "type": "module",
@@ -21,7 +21,7 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "kairo": "*"
+    "@thekairojs/kairo": "*"
   },
   "devDependencies": {
     "kairo":      "*",

@@ -28,7 +28,7 @@ const TSCONFIG = JSON.stringify({
   include: ['src'],
 }, null, 2)
 
-const INDEX_TS = `import { createApp } from 'kairo'
+const INDEX_TS = `import { createApp } from '@thekairojs/kairo'
 import { createMembrane } from 'kairo/membrane'
 
 const app = createApp()

@@ -6,15 +6,15 @@
  */
 
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import { createApp } from 'kairo'
-import type { KairoContext } from 'kairo'
-import { createMembrane, IpTracker } from 'kairo-membrane'
-import { createIntent } from 'kairo-intent'
-import { createLattice } from 'kairo-lattice'
-import { createSentinel, createCanary, scanForCanary, revokeCanaryAfter } from 'kairo-sentinel'
-import { createShield } from 'kairo-shield'
-import { createHardening } from 'kairo-hardening'
-import { validate, devLogger } from 'kairo-dx'
+import { createApp } from '@thekairojs/kairo'
+import type { KairoContext } from '@thekairojs/kairo'
+import { createMembrane, IpTracker } from '@thekairojs/kairo-membrane'
+import { createIntent } from '@thekairojs/kairo-intent'
+import { createLattice } from '@thekairojs/kairo-lattice'
+import { createSentinel, createCanary, scanForCanary, revokeCanaryAfter } from '@thekairojs/kairo-sentinel'
+import { createShield } from '@thekairojs/kairo-shield'
+import { createHardening } from '@thekairojs/kairo-hardening'
+import { validate, devLogger } from '@thekairojs/kairo-dx'
 
 // ─── HTTP helper ─────────────────────────────────────────────────────────────
 
