@@ -1,4 +1,5 @@
 import type { KairoContext, Middleware } from 'kairo'
+import { emitSecurityEvent } from 'kairo'
 import { scanForPii } from './patterns.js'
 
 export interface ShieldOptions {
@@ -65,13 +66,10 @@ export function createShield(options: ShieldOptions = {}): Middleware {
         const suppress = options.onPii?.(ctx, matches)
 
         if (suppress !== false) {
-          ctx.kairo.events.push({
-            type:      'taint_neutralized',
-            route:     ctx.path,
-            detail:    `pii in response: ${matches.map(m => `${m.field}(${m.pattern})`).join(', ')}`,
-            timestamp: Date.now(),
-            entropy:   ctx.kairo.entropy,
-            ip:        ctx.ip,
+          emitSecurityEvent(ctx, {
+            type:   'taint_neutralized',
+            route:  ctx.path,
+            detail: `pii in response: ${matches.map(m => `${m.field}(${m.pattern})`).join(', ')}`,
           })
         }
 
@@ -87,13 +85,10 @@ export function createShield(options: ShieldOptions = {}): Middleware {
       const serialized = typeof body === 'string' ? body : JSON.stringify(body)
       const found = sensitives.filter(s => serialized.includes(s))
       if (found.length > 0) {
-        ctx.kairo.events.push({
-          type:      'taint_neutralized',
-          route:     ctx.path,
-          detail:    `sensitive strings in response: ${found.map(s => s.slice(0, 8)).join(', ')}`,
-          timestamp: Date.now(),
-          entropy:   ctx.kairo.entropy,
-          ip:        ctx.ip,
+        emitSecurityEvent(ctx, {
+          type:   'taint_neutralized',
+          route:  ctx.path,
+          detail: `sensitive strings in response: ${found.map(s => s.slice(0, 8)).join(', ')}`,
         })
       }
     }

@@ -54,10 +54,11 @@ describe('IpTracker — basic recording', () => {
     expect(snap.hasGhostHit).toBe(true)
   })
 
-  it('markGhostHit is a no-op for unknown IP', () => {
-    // Should not throw
+  it('markGhostHit creates a stub record for unknown IPs so ghost hits are never lost', () => {
+    // Ghost routes run outside the middleware chain, so the IP may have no prior record.
+    // markGhostHit must still persist the hit — it should create a minimal stub.
     expect(() => tracker.markGhostHit('9.9.9.9')).not.toThrow()
-    expect(tracker.peek('9.9.9.9').hasGhostHit).toBe(false)
+    expect(tracker.peek('9.9.9.9').hasGhostHit).toBe(true)
   })
 
   it('ghost hit persists once set', () => {

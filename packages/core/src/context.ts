@@ -247,6 +247,10 @@ function writeResponse(res: KairoResponse): void {
   }
 }
 
+// Internal symbol — used by app.ts to attach a per-request broadcast function.
+// Middleware packages never touch this directly; they just call emitSecurityEvent().
+export const _kairoBroadcastKey = Symbol('kairo.broadcast')
+
 export function emitSecurityEvent(ctx: KairoContext, event: Omit<SecurityEvent, 'timestamp' | 'entropy' | 'ip'>): void {
   const fullEvent: SecurityEvent = {
     ...event,
@@ -255,4 +259,7 @@ export function emitSecurityEvent(ctx: KairoContext, event: Omit<SecurityEvent, 
     ip:        ctx.ip,
   }
   ctx.kairo.events.push(fullEvent)
+  // Fire app-level onSecurityEvent listeners if the app wired a broadcast function
+  const broadcast = (ctx as unknown as Record<symbol, unknown>)[_kairoBroadcastKey] as ((e: SecurityEvent) => void) | undefined
+  broadcast?.(fullEvent)
 }

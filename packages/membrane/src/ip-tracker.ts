@@ -149,12 +149,18 @@ export class IpTracker {
    * }
    * ```
    *
-   * Note: If no record exists for the IP yet (e.g. the ghost hit was the only
-   * request), this call is a no-op. Call `record()` first if needed.
+   * Note: If no record exists for the IP yet (e.g. the ghost hit was the very
+   * first request from that IP), a minimal record is created automatically.
    */
   markGhostHit(ip: string): void {
-    const rec = this.records.get(ip)
-    if (rec) rec.hasGhostHit = true
+    let rec = this.records.get(ip)
+    if (!rec) {
+      // Ghost routes run outside the normal middleware chain, so the IP may
+      // not have a record yet. Create a minimal stub so hasGhostHit is stored.
+      rec = { visits: [], hasGhostHit: false, lastSeen: Date.now() }
+      this.records.set(ip, rec)
+    }
+    rec.hasGhostHit = true
   }
 
   /** Remove all data for a given IP. */

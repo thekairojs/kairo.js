@@ -13,7 +13,7 @@ import type {
   ServerAdapter,
 } from './types.js'
 import { Router } from './router.js'
-import { createContext, createRequest, createResponse, flushResponse } from './context.js'
+import { createContext, createRequest, createResponse, flushResponse, emitSecurityEvent, _kairoBroadcastKey } from './context.js'
 import { compose } from './middleware.js'
 import { parseBody } from './body-parser.js'
 import { createHttpAdapter, type RequestHandler } from './server.js'
@@ -256,6 +256,15 @@ export class KairoApp implements KairoAppInstance {
     const res = createResponse(rawRes)
     const ctx = createContext(req, res, {})
 
+    // Wire per-request broadcast so emitSecurityEvent() fires plugin listeners
+    if (this.securityEventListeners.length > 0) {
+      ;(ctx as unknown as Record<symbol, unknown>)[_kairoBroadcastKey] = (event: import('./types.js').SecurityEvent) => {
+        for (const listener of this.securityEventListeners) {
+          listener(event)
+        }
+      }
+    }
+
     try {
       // H2: Check the router FIRST — real routes win over ghost routes
       const match = this.router.find(req.method, req.path)
@@ -338,18 +347,11 @@ export class KairoApp implements KairoAppInstance {
           ctx.kairo.ghostRouteTriggered = true
           ctx.kairo.entropy = Math.min(ctx.kairo.entropy + 0.4, 1.0)
 
-          const event: import('./types.js').SecurityEvent = {
-            type:      'ghost_route_hit',
-            route:     req.path,
-            detail:    `Ghost route hit: ${req.path} (alert: ${ghost.alertLevel})`,
-            timestamp: Date.now(),
-            entropy:   ctx.kairo.entropy,
-            ip:        ctx.ip,
-          }
-          ctx.kairo.events.push(event)
-          for (const listener of this.securityEventListeners) {
-            listener(event)
-          }
+          emitSecurityEvent(ctx, {
+            type:   'ghost_route_hit',
+            route:  req.path,
+            detail: `Ghost route hit: ${req.path} (alert: ${ghost.alertLevel})`,
+          })
 
           if (typeof ghost.response === 'string') {
             ctx.text(ghost.response, 200)

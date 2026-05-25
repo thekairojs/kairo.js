@@ -1,4 +1,5 @@
 import type { KairoContext, Middleware } from 'kairo'
+import { emitSecurityEvent } from 'kairo'
 import { classify } from './classify.js'
 
 export interface IntentOptions {
@@ -61,13 +62,10 @@ export function createIntent(options: IntentOptions = {}): Middleware {
     }
 
     if (result.type === 'scanner' || result.type === 'bot') {
-      ctx.kairo.events.push({
-        type:      'intent_drift',
-        route:     ctx.path,
-        detail:    `classified as ${result.type} (confidence ${result.confidence.toFixed(2)}): ${result.signals.join('; ')}`,
-        timestamp: Date.now(),
-        entropy:   ctx.kairo.entropy,
-        ip:        ctx.ip,
+      emitSecurityEvent(ctx, {
+        type:   'intent_drift',
+        route:  ctx.path,
+        detail: `classified as ${result.type} (confidence ${result.confidence.toFixed(2)}): ${result.signals.join('; ')}`,
       })
     }
 

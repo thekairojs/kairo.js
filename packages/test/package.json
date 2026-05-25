@@ -1,0 +1,23 @@
+{
+  "name": "kairo-test",
+  "version": "1.0.0-alpha",
+  "description": "KAIRO cross-package integration tests — full pipeline on a real HTTP server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test":      "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "kairo":             "*",
+    "kairo-membrane":    "*",
+    "kairo-intent":      "*",
+    "kairo-lattice":     "*",
+    "kairo-sentinel":    "*",
+    "kairo-shield":      "*",
+    "kairo-hardening":   "*",
+    "kairo-dx":          "*",
+    "vitest":            "^4.1.7",
+    "typescript":        "^5.4.0"
+  }
+}

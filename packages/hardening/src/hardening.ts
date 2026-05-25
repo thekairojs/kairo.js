@@ -1,4 +1,5 @@
 import type { KairoContext, Middleware } from 'kairo'
+import { emitSecurityEvent } from 'kairo'
 
 export type HardeningAction = 'block' | 'log'
 
@@ -65,13 +66,10 @@ export function createHardening(options: HardeningOptions = {}): Middleware {
       }
 
       // record the event
-      ctx.kairo.events.push({
-        type:      'entropy_spike',
-        route:     ctx.path,
-        detail:    `entropy ${entropy.toFixed(3)} >= threshold ${threshold}`,
-        timestamp: Date.now(),
-        entropy,
-        ip:        ctx.ip,
+      emitSecurityEvent(ctx, {
+        type:   'entropy_spike',
+        route:  ctx.path,
+        detail: `entropy ${entropy.toFixed(3)} >= threshold ${threshold}`,
       })
 
       if (action === 'block') {
