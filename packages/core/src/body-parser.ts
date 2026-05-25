@@ -112,14 +112,18 @@ function parseUrlEncoded(body: string): Record<string, string> {
     const eqIdx = pair.indexOf('=')
     if (eqIdx === -1) {
       // M5: apply + → space decoding on key too
-      const key = decodeURIComponent(pair.replace(/\+/g, ' '))
+      let key: string
+      try { key = decodeURIComponent(pair.replace(/\+/g, ' ')) } catch { continue }
       if (BLOCKED_KEYS.has(key)) continue
       result[key] = ''
     } else {
       // M5: apply + → space decoding on key
-      const key = decodeURIComponent(pair.slice(0, eqIdx).replace(/\+/g, ' '))
+      let key: string
+      let value: string
+      try { key = decodeURIComponent(pair.slice(0, eqIdx).replace(/\+/g, ' ')) } catch { continue }
       if (BLOCKED_KEYS.has(key)) continue
-      result[key] = decodeURIComponent(pair.slice(eqIdx + 1).replace(/\+/g, ' '))
+      try { value = decodeURIComponent(pair.slice(eqIdx + 1).replace(/\+/g, ' ')) } catch { value = '' }
+      result[key] = value
     }
   }
   return result

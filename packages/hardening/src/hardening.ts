@@ -74,7 +74,7 @@ export function createHardening(options: HardeningOptions = {}): Middleware {
       })
 
       if (action === 'block') {
-        ctx.json({ error: message, entropy }, status)
+        ctx.json({ error: message }, status)
         return   // do NOT call next()
       }
       // action === 'log' falls through to next()

@@ -69,6 +69,21 @@ describe('createRequest', () => {
     expect(req.query['q']).toBe('hello world')
   })
 
+  it('does not throw on malformed percent-encoding in query key', () => {
+    // %80 is invalid UTF-8 — must silently skip the pair, never throw URIError
+    expect(() => createRequest(makeFakeRawReq({ url: '/?%80invalid=value&safe=yes' }))).not.toThrow()
+    const req = createRequest(makeFakeRawReq({ url: '/?%80invalid=value&safe=yes' }))
+    expect(req.query['safe']).toBe('yes')
+  })
+
+  it('does not throw on malformed percent-encoding in query value', () => {
+    expect(() => createRequest(makeFakeRawReq({ url: '/?key=%80invalid&other=ok' }))).not.toThrow()
+    const req = createRequest(makeFakeRawReq({ url: '/?key=%80invalid&other=ok' }))
+    // key with bad value: value falls back to empty string; other pair survives
+    expect(req.query['other']).toBe('ok')
+    expect(req.query['key']).toBe('')
+  })
+
   it('extracts IP from socket', () => {
     const raw = makeFakeRawReq({ socket: { remoteAddress: '192.168.1.1' } })
     const req = createRequest(raw)

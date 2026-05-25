@@ -140,7 +140,9 @@ async function _deny(
   if (onDeny) {
     await onDeny(ctx, reason)
   } else {
-    ctx.json({ error: 'Forbidden', reason }, 403)
+    // Do NOT include reason in the response body — it leaks auth requirements to callers.
+    // The reason is available in ctx.kairo.events for internal audit/logging.
+    ctx.json({ error: 'Forbidden' }, 403)
   }
 }
 

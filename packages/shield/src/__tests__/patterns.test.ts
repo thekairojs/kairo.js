@@ -69,3 +69,17 @@ describe('scanForPii — sample safety', () => {
     expect(match?.sample.length).toBeLessThanOrEqual(4)
   })
 })
+
+describe('scanForPii — multiple matches in a single field', () => {
+  it('detects all emails when a field contains multiple email addresses', () => {
+    const matches = scanForPii({ contacts: 'alice@example.com and bob@example.com' })
+    const emailMatches = matches.filter(m => m.pattern === 'email')
+    expect(emailMatches.length).toBeGreaterThanOrEqual(2)
+  })
+
+  it('detects all SSNs when a field contains multiple', () => {
+    const matches = scanForPii({ data: 'ssn: 123-45-6789 or 987-65-4321' })
+    const ssnMatches = matches.filter(m => m.pattern === 'ssn')
+    expect(ssnMatches.length).toBeGreaterThanOrEqual(2)
+  })
+})

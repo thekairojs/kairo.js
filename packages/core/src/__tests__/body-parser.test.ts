@@ -54,4 +54,18 @@ describe('parseBody', () => {
     const body = await parseBody(req) as Record<string, string>
     expect(body['city']).toBe('New York')
   })
+
+  it('does not throw on malformed percent-encoding in URL-encoded body key', async () => {
+    // %80 is not valid UTF-8 — must not crash with URIError
+    const req = makeReq('name=%80abc&other=val', 'application/x-www-form-urlencoded')
+    await expect(parseBody(req)).resolves.not.toThrow()
+    const body = await parseBody(makeReq('name=%80abc&other=val', 'application/x-www-form-urlencoded')) as Record<string, string>
+    // The invalid pair should be silently skipped; valid pair must survive
+    expect(body['other']).toBe('val')
+  })
+
+  it('does not throw on malformed percent-encoding in URL-encoded body value', async () => {
+    const req = makeReq('key=%80invalid', 'application/x-www-form-urlencoded')
+    await expect(parseBody(req)).resolves.not.toThrow()
+  })
 })

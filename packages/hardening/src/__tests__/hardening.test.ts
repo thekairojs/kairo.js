@@ -53,12 +53,13 @@ describe('createHardening — blocking', () => {
     expect(jsonSpy).toHaveBeenCalledWith(expect.anything(), 429)
   })
 
-  it('includes entropy in the block response', async () => {
+  it('does NOT expose entropy score in the block response body (information disclosure)', async () => {
     const ctx = makeCtx(0.9)
     const jsonSpy = vi.spyOn(ctx, 'json')
     await createHardening({ threshold: 0.5 })(ctx, noop)
-    const body = jsonSpy.mock.calls[0]?.[0] as { entropy: number }
-    expect(body.entropy).toBeCloseTo(0.9)
+    const body = jsonSpy.mock.calls[0]?.[0] as Record<string, unknown>
+    expect(body['entropy']).toBeUndefined()
+    expect(body['error']).toBeDefined()
   })
 
   it('uses a custom message when provided', async () => {

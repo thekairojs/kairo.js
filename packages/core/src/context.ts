@@ -22,13 +22,16 @@ function parseQueryString(search: string): Record<string, string | undefined> {
   for (const pair of queryString.split('&')) {
     const eqIdx = pair.indexOf('=')
     if (eqIdx === -1) {
-      const key = decodeURIComponent(pair)
+      let key: string
+      try { key = decodeURIComponent(pair) } catch { continue }
       if (BLOCKED_KEYS.has(key)) continue
       params[key] = ''
     } else {
-      const key = decodeURIComponent(pair.slice(0, eqIdx))
+      let key: string
+      let value: string
+      try { key = decodeURIComponent(pair.slice(0, eqIdx)) } catch { continue }
       if (BLOCKED_KEYS.has(key)) continue
-      const value = decodeURIComponent(pair.slice(eqIdx + 1))
+      try { value = decodeURIComponent(pair.slice(eqIdx + 1)) } catch { value = '' }
       params[key] = value
     }
   }

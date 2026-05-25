@@ -29,9 +29,12 @@ function _scan(val: unknown, path: string, out: PiiMatch[], visited: Set<object>
   if (typeof val === 'string') {
     for (const [name, re] of PATTERNS) {
       re.lastIndex = 0
-      const m = re.exec(val)
-      if (m) {
+      // Use exec in a loop to find ALL matches in the string, not just the first
+      let m: RegExpExecArray | null
+      while ((m = re.exec(val)) !== null) {
         out.push({ field: path, pattern: name, sample: m[0].slice(0, 4) })
+        // Safety: guard against zero-width matches causing infinite loops
+        if (re.lastIndex === m.index) { re.lastIndex++; break }
       }
     }
     return

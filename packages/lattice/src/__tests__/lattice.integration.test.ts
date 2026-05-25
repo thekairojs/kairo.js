@@ -80,11 +80,12 @@ describe('Lattice — level-based route protection', () => {
     expect(res.status).toBe(403)
   })
 
-  it('403 response has correct shape', async () => {
+  it('403 response has correct shape and does not leak reason', async () => {
     const res = await req(port, 'GET', '/admin')
-    const body = res.body as { error: string; reason: string }
+    const body = res.body as { error: string; reason?: string }
     expect(body.error).toBe('Forbidden')
-    expect(typeof body.reason).toBe('string')
+    // reason must NOT be in the response body — it leaks auth requirements
+    expect(body.reason).toBeUndefined()
   })
 })
 

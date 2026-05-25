@@ -5,10 +5,41 @@ import { emitSecurityEvent } from 'kairo'
 const CANARY_FIELD = '__k_c__'
 const registry = new Map<string, { route: string; createdAt: number }>()
 
+/** Max tokens in the registry — prevents unbounded memory growth. */
+const REGISTRY_MAX = 100_000
+/** Tokens older than this are eligible for eviction during overflow. 24 hours. */
+const CANARY_TTL_MS = 24 * 60 * 60 * 1000
+
+/**
+ * Evict the oldest entries when the registry is at capacity.
+ * Called only on overflow — O(n) scan is acceptable at that boundary.
+ */
+function _evictOldest(): void {
+  const cutoff = Date.now() - CANARY_TTL_MS
+  // First pass: remove expired tokens
+  for (const [token, entry] of registry) {
+    if (entry.createdAt < cutoff) registry.delete(token)
+    if (registry.size < REGISTRY_MAX) return
+  }
+  // Second pass: if still at cap, remove the single oldest entry
+  let oldestToken: string | null = null
+  let oldestTime = Infinity
+  for (const [token, entry] of registry) {
+    if (entry.createdAt < oldestTime) {
+      oldestTime = entry.createdAt
+      oldestToken = token
+    }
+  }
+  if (oldestToken !== null) registry.delete(oldestToken)
+}
+
 export function createCanary<T extends Record<string, unknown>>(
   record: T,
   ctx?: KairoContext,
 ): T & { [CANARY_FIELD]: string } {
+  if (registry.size >= REGISTRY_MAX) {
+    _evictOldest()
+  }
   const token = randomBytes(16).toString('hex')
   registry.set(token, {
     route: ctx?.path ?? 'unknown',
