@@ -39,6 +39,16 @@ export interface KairoSecurityContext {
   overrides: SecurityOverride[]
   events: SecurityEvent[]
   lattice: LatticeContext
+  intent: IntentContext
+}
+
+export type IntentType = 'human' | 'api' | 'bot' | 'scanner' | 'unknown'
+
+export interface IntentContext {
+  type: IntentType
+  confidence: number
+  signals: string[]
+  resolved: boolean
 }
 
 export interface SecurityOverride {

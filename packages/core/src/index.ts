@@ -28,6 +28,8 @@ export type {
   TrustLevel,
   TrustClaims,
   LatticeContext,
+  IntentType,
+  IntentContext,
   RiskLevel,
   LayerOverrides,
 } from './types.js'

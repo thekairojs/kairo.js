@@ -107,6 +107,7 @@ export function createSecurityContext(): KairoSecurityContext {
     overrides: [],
     events: [],
     lattice: { claims: null, resolved: false },
+    intent: { type: 'unknown', confidence: 0, signals: [], resolved: false },
   }
 }
 
