@@ -37,7 +37,6 @@ export type {
 import { KairoApp } from './app.js'
 import type { KairoConfig, KairoAppInstance } from './types.js'
 
-// L2: explicit return type so the concrete class isn't leaked
-export function createApp(config?: KairoConfig): KairoAppInstance {
+export function createApp(config?: KairoConfig): KairoApp {
   return new KairoApp(config)
 }

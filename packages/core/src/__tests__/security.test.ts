@@ -4,9 +4,9 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import { createApp } from '../index.js'
 import { createRequest, createResponse, createContext, flushResponse } from '../context.js'
+import type { KairoContext } from '../types.js'
 import { parseBody } from '../body-parser.js'
 import type { KairoApp } from '../app.js'
-import type { KairoContext } from '../types.js'
 import { Readable } from 'node:stream'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 

@@ -4,8 +4,8 @@
  */
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import { createApp } from 'kairo'
-import { createMembrane, IpTracker, verifySignature, sign } from '../index.js'
 import type { KairoContext } from 'kairo'
+import { createMembrane, IpTracker, verifySignature, sign } from '../index.js'
 
 const BASE_PORT = 3400
 

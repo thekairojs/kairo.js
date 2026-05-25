@@ -44,13 +44,13 @@ describe('Basic routing', () => {
 
   beforeAll(async () => {
     app = createApp()
-    app.get('/', (ctx) => ctx.json({ hello: 'kairo' }))
-    app.get('/users', (ctx) => ctx.json([{ id: 1 }]))
-    app.get('/users/:id', (ctx) => ctx.json({ id: ctx.params['id'] }))
-    app.post('/users', (ctx) => ctx.json({ created: true, body: ctx.body }, 201))
-    app.put('/users/:id', (ctx) => ctx.json({ updated: ctx.params['id'] }))
-    app.delete('/users/:id', (ctx) => ctx.status(204).send(undefined))
-    app.patch('/users/:id', (ctx) => ctx.json({ patched: true }))
+    app.get('/', (ctx: KairoContext) => ctx.json({ hello: 'kairo' }))
+    app.get('/users', (ctx: KairoContext) => ctx.json([{ id: 1 }]))
+    app.get('/users/:id', (ctx: KairoContext) => ctx.json({ id: ctx.params['id'] }))
+    app.post('/users', (ctx: KairoContext) => ctx.json({ created: true, body: ctx.body }, 201))
+    app.put('/users/:id', (ctx: KairoContext) => ctx.json({ updated: ctx.params['id'] }))
+    app.delete('/users/:id', (ctx: KairoContext) => ctx.status(204).send(undefined))
+    app.patch('/users/:id', (ctx: KairoContext) => ctx.json({ patched: true }))
     await app.listen(port)
   })
 
@@ -137,8 +137,8 @@ describe('Middleware pipeline', () => {
       await next()
     }
 
-    app.get('/public', (ctx) => ctx.json({ public: true, started: ctx.state['started'] }))
-    app.get('/private', requireAuth, (ctx) => ctx.json({ user: ctx.state['user'] }))
+    app.get('/public', (ctx: KairoContext) => ctx.json({ public: true, started: ctx.state['started'] }))
+    app.get('/private', requireAuth, (ctx: KairoContext) => ctx.json({ user: ctx.state['user'] }))
 
     await app.listen(port)
   })
@@ -179,8 +179,8 @@ describe('Route groups', () => {
     app = createApp()
 
     const api = app.group('/api/v1')
-    api.get('/health', (ctx) => ctx.json({ status: 'ok' }))
-    api.get('/users', (ctx) => ctx.json({ users: [] }))
+    api.get('/health', (ctx: KairoContext) => ctx.json({ status: 'ok' }))
+    api.get('/users', (ctx: KairoContext) => ctx.json({ users: [] }))
 
     const admin = app.group('/admin', {
       middleware: [
@@ -193,7 +193,7 @@ describe('Route groups', () => {
         },
       ],
     })
-    admin.get('/stats', (ctx) => ctx.json({ requests: 9001 }))
+    admin.get('/stats', (ctx: KairoContext) => ctx.json({ requests: 9001 }))
 
     await app.listen(port)
   })
@@ -228,7 +228,7 @@ describe('Ghost routes', () => {
 
   beforeAll(async () => {
     app = createApp()
-    app.get('/legit', (ctx) => ctx.json({ real: true }))
+    app.get('/legit', (ctx: KairoContext) => ctx.json({ real: true }))
     app.ghost('/trap', { response: { status: 'ok' }, alertLevel: 'high' })
     await app.listen(port)
   })
@@ -311,8 +311,8 @@ describe('Query strings and URL params', () => {
 
   beforeAll(async () => {
     app = createApp()
-    app.get('/search', (ctx) => ctx.json({ q: ctx.query['q'], page: ctx.query['page'] }))
-    app.get('/files/*', (ctx) => ctx.json({ path: ctx.params['*'] }))
+    app.get('/search', (ctx: KairoContext) => ctx.json({ q: ctx.query['q'], page: ctx.query['page'] }))
+    app.get('/files/*', (ctx: KairoContext) => ctx.json({ path: ctx.params['*'] }))
     await app.listen(port)
   })
 
@@ -363,7 +363,7 @@ describe('Security context', () => {
 
   beforeAll(async () => {
     app = createApp()
-    app.get('/entropy', (ctx) => ctx.json({ entropy: ctx.kairo.entropy }))
+    app.get('/entropy', (ctx: KairoContext) => ctx.json({ entropy: ctx.kairo.entropy }))
     await app.listen(port)
   })
 

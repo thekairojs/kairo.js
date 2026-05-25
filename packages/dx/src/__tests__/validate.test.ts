@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { validate } from '../validate.js'
 import { createContext, createRequest, createResponse } from 'kairo'
+import type { KairoContext } from 'kairo'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 function makeCtx(url = '/', params: Record<string, string> = {}): KairoContext {
