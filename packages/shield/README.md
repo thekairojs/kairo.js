@@ -3,12 +3,12 @@
 Data Shield — scans outbound response bodies for PII and sensitive strings before they leave the process.
 
 ```bash
-npm install kairo kairo-shield
+npm install @thekairojs/kairo @thekairojs/kairo-shield
 ```
 
 ```ts
-import { createApp } from 'kairo'
-import { createShield } from 'kairo-shield'
+import { createApp } from '@thekairojs/kairo'
+import { createShield } from '@thekairojs/kairo-shield'
 
 const app = createApp()
 app.use(createShield({ pii: true }))  // place at the top — wraps all handlers

@@ -3,12 +3,12 @@
 Runtime Sentinel — anomaly detection, canary record leak detection.
 
 ```bash
-npm install kairo kairo-sentinel
+npm install @thekairojs/kairo @thekairojs/kairo-sentinel
 ```
 
 ```ts
-import { createApp } from 'kairo'
-import { createSentinel, createCanary, scanForCanary } from 'kairo-sentinel'
+import { createApp } from '@thekairojs/kairo'
+import { createSentinel, createCanary, scanForCanary } from '@thekairojs/kairo-sentinel'
 
 const app = createApp()
 app.use(createSentinel())
@@ -28,7 +28,7 @@ Detections raise `entropy_spike` security events on `ctx.kairo.events`.
 Canary tokens are 16-byte hex values injected into database rows. If one leaks into an API response it means someone exfiltrated data from a path that shouldn't have access.
 
 ```ts
-import { createCanary, scanForCanary } from 'kairo-sentinel'
+import { createCanary, scanForCanary } from '@thekairojs/kairo-sentinel'
 
 // When writing to the DB
 const row = { id: userId, name: 'Alice', _canary: createCanary(`user:${userId}`) }

@@ -3,13 +3,13 @@
 Intent Engine — classifies request origin as `human`, `api`, `bot`, or `scanner`.
 
 ```bash
-npm install kairo kairo-intent
+npm install @thekairojs/kairo @thekairojs/kairo-intent
 ```
 
 ```ts
-import { createApp } from 'kairo'
-import { createMembrane } from 'kairo-membrane'
-import { createIntent } from 'kairo-intent'
+import { createApp } from '@thekairojs/kairo'
+import { createMembrane } from '@thekairojs/kairo-membrane'
+import { createIntent } from '@thekairojs/kairo-intent'
 
 const app = createApp()
 app.use(createMembrane())

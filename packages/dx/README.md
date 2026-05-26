@@ -3,13 +3,13 @@
 DX Layer — schema validation middleware and dev-mode request diagnostics.
 
 ```bash
-npm install kairo kairo-dx
+npm install @thekairojs/kairo @thekairojs/kairo-dx
 ```
 
 ## Schema validation
 
 ```ts
-import { validate } from 'kairo-dx'
+import { validate } from '@thekairojs/kairo-dx'
 
 app.post('/users', validate({
   body: {
@@ -44,7 +44,7 @@ Validation failures elevate entropy (`+0.1`) and emit a `taint_neutralized` even
 ## Dev logger
 
 ```ts
-import { devLogger } from 'kairo-dx'
+import { devLogger } from '@thekairojs/kairo-dx'
 
 app.use(devLogger())
 // or

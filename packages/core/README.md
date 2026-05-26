@@ -3,11 +3,11 @@
 Core framework. App, router, context, body parser, middleware chain.
 
 ```bash
-npm install kairo
+npm install @thekairojs/kairo
 ```
 
 ```ts
-import { createApp } from 'kairo'
+import { createApp } from '@thekairojs/kairo'
 
 const app = createApp()
 

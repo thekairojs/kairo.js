@@ -3,39 +3,53 @@
 A security-substrate web framework for Node.js. Every request is scored, tracked, and guarded before it reaches your code.
 
 ```
-Request → Membrane → Trust Lattice → Your handlers → Data Shield → Sentinel → Response
+Request → Membrane → Trust Lattice → Your Code → Data Shield → Sentinel → Response
 ```
+
+Most frameworks bolt security on after the fact. KAIRO builds it into the request lifecycle — entropy scoring, taint tracking, claim-based auth, output scanning, and anomaly detection run as first-class middleware, not afterthoughts.
 
 ## Packages
 
-| Package | Description |
-|---------|-------------|
-| `kairo` | Core framework — app, router, context, middleware |
-| `kairo-membrane` | Entropy scoring, taint tracking, HMAC signing |
-| `kairo-lattice` | Trust lattice — claim-based auth with level ordering |
-| `kairo-sentinel` | Runtime anomaly detection, canary records |
-| `kairo-hardening` | Active entropy-based request blocking |
-| `kairo-dx` | Schema validation middleware + dev logger |
-| `kairo-cli` | CLI — scaffold, route inspection, security audit |
+| Package | npm | Description |
+|---------|-----|-------------|
+| `@thekairojs/kairo` | [![npm](https://img.shields.io/npm/v/@thekairojs/kairo)](https://www.npmjs.com/package/@thekairojs/kairo) | Core — app, router, context, middleware |
+| `@thekairojs/kairo-membrane` | [![npm](https://img.shields.io/npm/v/@thekairojs/kairo-membrane)](https://www.npmjs.com/package/@thekairojs/kairo-membrane) | Entropy scoring, taint tracking, HMAC signing |
+| `@thekairojs/kairo-lattice` | [![npm](https://img.shields.io/npm/v/@thekairojs/kairo-lattice)](https://www.npmjs.com/package/@thekairojs/kairo-lattice) | Claim-based auth with ordered trust levels |
+| `@thekairojs/kairo-hardening` | [![npm](https://img.shields.io/npm/v/@thekairojs/kairo-hardening)](https://www.npmjs.com/package/@thekairojs/kairo-hardening) | Block high-entropy requests automatically |
+| `@thekairojs/kairo-shield` | [![npm](https://img.shields.io/npm/v/@thekairojs/kairo-shield)](https://www.npmjs.com/package/@thekairojs/kairo-shield) | Outbound PII detection and redaction |
+| `@thekairojs/kairo-sentinel` | [![npm](https://img.shields.io/npm/v/@thekairojs/kairo-sentinel)](https://www.npmjs.com/package/@thekairojs/kairo-sentinel) | Runtime anomaly detection, canary records |
+| `@thekairojs/kairo-dx` | [![npm](https://img.shields.io/npm/v/@thekairojs/kairo-dx)](https://www.npmjs.com/package/@thekairojs/kairo-dx) | Schema validation middleware + dev logger |
+| `@thekairojs/kairo-cli` | [![npm](https://img.shields.io/npm/v/@thekairojs/kairo-cli)](https://www.npmjs.com/package/@thekairojs/kairo-cli) | Scaffold, route inspection, security audit |
 
 ## Quick start
 
 ```bash
-npm install kairo kairo-membrane kairo-lattice
+npm install @thekairojs/kairo @thekairojs/kairo-membrane @thekairojs/kairo-lattice @thekairojs/kairo-hardening
 ```
 
 ```ts
-import { createApp } from 'kairo'
-import { createMembrane } from 'kairo-membrane'
-import { createLattice } from 'kairo-lattice'
-import { createHardening } from 'kairo-hardening'
+import { createApp } from '@thekairojs/kairo'
+import { createMembrane } from '@thekairojs/kairo-membrane'
+import { createLattice } from '@thekairojs/kairo-lattice'
+import { createHardening } from '@thekairojs/kairo-hardening'
 
 const app = createApp()
-const lattice = createLattice({ resolve: async (ctx) => ({ level: 'low', roles: [], subject: ctx.headers['x-user-id'] as string }) })
+
+const lattice = createLattice({
+  resolve: async (ctx) => ({
+    level:   ctx.headers['x-trust'] ?? 'none',
+    roles:   [],
+    subject: ctx.headers['x-user-id'],
+  }),
+})
 
 app.use(createMembrane())
 app.use(createHardening({ threshold: 0.75 }))
-app.use(lattice.resolveMiddleware)
+app.use(lattice)
+
+app.get('/public', (ctx) => {
+  ctx.json({ ok: true })
+})
 
 app.get('/admin', lattice.require({ level: 'high' }), (ctx) => {
   ctx.json({ ok: true })
@@ -44,26 +58,42 @@ app.get('/admin', lattice.require({ level: 'high' }), (ctx) => {
 await app.listen(3000)
 ```
 
+## How it works
+
+Every request gets an **entropy score** between `0.0` (clean) and `1.0` (hostile), computed from:
+
+- Header anomalies — scanner user-agents, missing fields, injection characters
+- IP behavior — request rate, path diversity, ghost route hits
+- Payload signals — body size spikes, suspicious content types
+- Timing — inter-request cadence relative to rolling baseline
+
+That score flows through `ctx.kairo.entropy` and every layer can read or react to it. The hardening layer blocks anything at or above your threshold before it reaches your handlers.
+
 ## CLI
 
 ```bash
-npx kairo-cli new my-app     # scaffold a new project
-npx kairo-cli routes         # list all registered routes
-npx kairo-cli audit          # scan for security anti-patterns
-npx kairo-cli ghost          # find unbound handler functions
+npx @thekairojs/kairo-cli new my-app    # scaffold a new project
+npx @thekairojs/kairo-cli routes        # list all registered routes
+npx @thekairojs/kairo-cli audit         # scan for security anti-patterns
 ```
 
 ## Architecture
 
-Seven layers, each with a specific role:
+Seven layers, each with a distinct role:
 
-1. **Request Membrane** — scores every request with entropy [0–1], tracks tainted inputs
-2. **Intent Engine** — _(planned)_ classifies request patterns
-3. **Trust Lattice** — claim-based auth, level ordering: none < low < medium < high
-4. **Developer Code** — your handlers run here, after all guards pass
-5. **Data Shield** — _(planned)_ output sanitization, canary record injection
-6. **Runtime Sentinel** — anomaly detection, canary leak detection
-7. **DX / Hardening** — validation middleware, dev diagnostics, active blocking
+| Layer | Package | Role |
+|-------|---------|------|
+| Request Membrane | `kairo-membrane` | Score and taint-track every request |
+| Intent Engine | `kairo-intent` | Classify request patterns |
+| Trust Lattice | `kairo-lattice` | Claim-based auth: none < low < medium < high |
+| Developer Code | — | Your handlers, after all guards pass |
+| Data Shield | `kairo-shield` | Scan outbound responses for PII |
+| Runtime Sentinel | `kairo-sentinel` | Anomaly detection, canary leak detection |
+| DX / Hardening | `kairo-dx`, `kairo-hardening` | Validation, diagnostics, active blocking |
+
+## Documentation
+
+See [userguide.md](./userguide.md) for a full walkthrough of every layer with code examples.
 
 ## License
 

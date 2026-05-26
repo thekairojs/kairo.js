@@ -3,13 +3,13 @@
 Active entropy-based request blocking. Place after `kairo-membrane` to reject high-entropy requests before they reach your handlers.
 
 ```bash
-npm install kairo kairo-hardening
+npm install @thekairojs/kairo @thekairojs/kairo-hardening
 ```
 
 ```ts
-import { createApp } from 'kairo'
-import { createMembrane } from 'kairo-membrane'
-import { createHardening } from 'kairo-hardening'
+import { createApp } from '@thekairojs/kairo'
+import { createMembrane } from '@thekairojs/kairo-membrane'
+import { createHardening } from '@thekairojs/kairo-hardening'
 
 const app = createApp()
 app.use(createMembrane())

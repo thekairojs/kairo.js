@@ -3,12 +3,12 @@
 Trust Lattice — claim-based authorization with ordered trust levels.
 
 ```bash
-npm install kairo kairo-lattice
+npm install @thekairojs/kairo @thekairojs/kairo-lattice
 ```
 
 ```ts
-import { createApp } from 'kairo'
-import { createLattice } from 'kairo-lattice'
+import { createApp } from '@thekairojs/kairo'
+import { createLattice } from '@thekairojs/kairo-lattice'
 
 const lattice = createLattice({
   resolve: async (ctx) => ({

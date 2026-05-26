@@ -3,12 +3,12 @@
 Request Membrane — entropy scoring, taint tracking, IP behavior analysis, HMAC signing.
 
 ```bash
-npm install kairo kairo-membrane
+npm install @thekairojs/kairo @thekairojs/kairo-membrane
 ```
 
 ```ts
-import { createApp } from 'kairo'
-import { createMembrane } from 'kairo-membrane'
+import { createApp } from '@thekairojs/kairo'
+import { createMembrane } from '@thekairojs/kairo-membrane'
 
 const app = createApp()
 app.use(createMembrane())
@@ -32,7 +32,7 @@ Fields that arrive from untrusted sources (query, body, params) are tracked in `
 ### HMAC signing
 
 ```ts
-import { signHmac, verifyHmac } from 'kairo-membrane'
+import { signHmac, verifyHmac } from '@thekairojs/kairo-membrane'
 
 const sig = signHmac({ userId: 42 }, secret)
 const valid = verifyHmac({ userId: 42 }, sig, secret)
