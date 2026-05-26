@@ -90,3 +90,27 @@ jobs:
         working-directory: packages/cli
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish kairo-adapter-prisma
+        run: npm publish --provenance --access public
+        working-directory: packages/adapters/prisma
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish kairo-adapter-drizzle
+        run: npm publish --provenance --access public
+        working-directory: packages/adapters/drizzle
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish kairo-adapter-pg
+        run: npm publish --provenance --access public
+        working-directory: packages/adapters/pg
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish kairo-adapter-uws
+        run: npm publish --provenance --access public
+        working-directory: packages/adapters/uws
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
