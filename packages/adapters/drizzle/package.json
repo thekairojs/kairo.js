@@ -1,0 +1,36 @@
+{
+  "name": "@thekairojs/kairo-adapter-drizzle",
+  "version": "1.0.0",
+  "description": "Drizzle ORM adapter for KAIRO — entropy gating, canary injection, and result scanning",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+      "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@thekairojs/kairo": "*",
+    "@thekairojs/kairo-sentinel": "*"
+  },
+  "peerDependencies": {
+    "drizzle-orm": ">=0.29.0"
+  },
+  "peerDependenciesMeta": {
+    "drizzle-orm": { "optional": false }
+  },
+  "keywords": ["kairo", "drizzle", "drizzle-orm", "adapter", "security", "canary"],
+  "license": "MIT",
+  "engines": { "node": ">=20.0.0" },
+  "repository": { "type": "git", "url": "https://github.com/thekairojs/kairo.js" }
+}
