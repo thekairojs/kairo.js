@@ -1,6 +1,6 @@
 {
   "name": "@thekairojs/kairo-lattice",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "KAIRO Trust Lattice — claim-based authorization with trust level ordering",
   "type": "module",
   "main": "./dist/index.cjs",

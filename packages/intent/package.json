@@ -1,6 +1,6 @@
 {
   "name": "@thekairojs/kairo-intent",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "KAIRO Intent Engine — classifies request origin as human, api, bot, or scanner",
   "type": "module",
   "main": "./dist/index.cjs",

@@ -1,6 +1,6 @@
 {
   "name": "@thekairojs/kairo-adapter-drizzle",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Drizzle ORM adapter for KAIRO — entropy gating, canary injection, and result scanning",
   "type": "module",
   "main": "./dist/index.cjs",

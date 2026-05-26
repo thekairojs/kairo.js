@@ -1,6 +1,6 @@
 {
   "name": "@thekairojs/kairo-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "KAIRO CLI — project scaffolding, route inspection, and security audit",
   "type": "module",
   "bin": {

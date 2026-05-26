@@ -1,6 +1,6 @@
 {
   "name": "@thekairojs/kairo-adapter-prisma",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Prisma adapter for KAIRO — entropy gating, canary injection, and PII scanning on every query",
   "type": "module",
   "main": "./dist/index.cjs",
