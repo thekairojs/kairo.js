@@ -77,7 +77,7 @@ export function createShimResponse(uwsRes: UwsResponse): ServerResponse {
           } else {
             // Buffer / Uint8Array — pass as ArrayBuffer slice
             const buf = Buffer.isBuffer(body) ? body : Buffer.from(body)
-            uwsRes.end(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength))
+            uwsRes.end(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer)
           }
         } else {
           uwsRes.end()
