@@ -27,3 +27,7 @@ export type { HmacOptions } from './hmac.js'
 
 // ── Taint propagation ─────────────────────────────────────────────────────────
 export { propagateTaint, isTainted, isAncestorTainted } from './taint.js'
+
+// ── Behavioral biometrics ─────────────────────────────────────────────────────
+export { createBiometrics, analyzeSignals, BiometricsStore, defaultBiometricsStore, BIOMETRICS_CLIENT_SCRIPT } from './biometrics.js'
+export type { BiometricsOptions, BiometricsSignal, BiometricsScore } from './biometrics.js'

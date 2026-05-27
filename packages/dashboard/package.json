@@ -1,0 +1,36 @@
+{
+  "name": "@thekairojs/kairo-dashboard",
+  "version": "1.1.0",
+  "description": "KAIRO Dashboard — real-time security monitoring UI with live event stream",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@thekairojs/kairo": "*"
+  },
+  "devDependencies": {
+    "@thekairojs/kairo": "*",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^4.1.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thekairojs/kairo.js"
+  }
+}

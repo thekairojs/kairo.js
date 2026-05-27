@@ -284,6 +284,7 @@ export class KairoApp implements KairoAppInstance {
 
         // Set params on context
         Object.assign(ctx.params, match.params)
+        ctx.state['kairo.route.options'] = match.route.options
 
         // H5: For HEAD requests, strip body after the full chain completes
         // Build middleware chain: global -> route-specific -> handler

@@ -14,11 +14,14 @@
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
+    "@types/node": "^22.15.0",
+    "highlight.js": "^11.11.1",
+    "marked": "^18.0.4",
+    "puppeteer": "^25.1.0",
+    "tsup": "^8.5.0",
     "turbo": "^2.5.0",
     "typescript": "^5.8.3",
-    "tsup": "^8.5.0",
-    "vitest": "^4.1.7",
-    "@types/node": "^22.15.0"
+    "vitest": "^4.1.7"
   },
   "engines": {
     "node": ">=20.0.0"
